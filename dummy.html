@@ -1,0 +1,326 @@
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png">
+    <meta name="apple-mobile-web-app-title" content="CodePen">
+
+    <link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico">
+
+    <link rel="mask-icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111">
+
+
+    <title>CodePen - Mouse cursor motion blur with TweenMax #html5 #motion #blur #motionblur #css3 #tweenmax @greensock</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,400italic,700italic,900&amp;subset=cyrillic-ext,latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+    <style>
+        * {
+            cursor: none;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        html {
+            font-family: 'Lato', sans-serif;
+            min-height: 100%;
+            height: 100%;
+            background: #000;
+            overflow: hidden;
+            cursor: none;
+        }
+        
+        html body {
+            min-height: 100%;
+            height: 100%;
+            cursor: none;
+            margin: 0;
+            padding: 0;
+            background: #4a4a4a;
+            /* Old browsers */
+            background: -moz-radial-gradient(center, ellipse cover, #4a4a4a 0%, #2a2a2a 100%);
+            /* FF3.6+ */
+            background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #4a4a4a), color-stop(100%, #2a2a2a));
+            /* Chrome,Safari4+ */
+            background: -webkit-radial-gradient(center, ellipse cover, #4a4a4a 0%, #2a2a2a 100%);
+            /* Chrome10+,Safari5.1+ */
+            background: -o-radial-gradient(center, ellipse cover, #4a4a4a 0%, #2a2a2a 100%);
+            /* Opera 12+ */
+            background: -ms-radial-gradient(center, ellipse cover, #4a4a4a 0%, #2a2a2a 100%);
+            /* IE10+ */
+            background: radial-gradient(ellipse at center, #4a4a4a 0%, #2a2a2a 100%);
+            /* W3C */
+        }
+        
+        html body #copy {
+            position: absolute;
+            bottom: 0;
+            height: 40px;
+            width: 100%;
+            text-align: center;
+            text-transform: uppercase;
+            line-height: 14px;
+            font-size: 10px;
+            font-weight: 400;
+            z-index: 999;
+        }
+        
+        html body #copy a {
+            color: #898989;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out 0s;
+            cursor: none;
+        }
+        
+        html body #copy a b {
+            font-weight: 700;
+        }
+        
+        html body #copy a:hover {
+            color: #fff;
+        }
+        
+        html body .box {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            top: 50%;
+            left: 50%;
+            margin: -50 0 0 -50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            -webkit-backface-visibility: hidden;
+            opacity: 0;
+            cursor: none;
+        }
+        
+        html body .box.arrow {
+            background: url('http://lmgtfy.com/assets/mouse_arrow_windows_aero-b118000dc97d4558d6db021793acc613.png') no-repeat 0 0 transparent;
+            border-radius: 0;
+        }
+        
+        html #intro {
+            position: relative;
+            font-size: 20px;
+            font-weight: 100;
+            text-align: center;
+            float: none;
+            display: block;
+            width: 100%;
+            color: #767676;
+            cursor: none;
+            padding-top: 80px;
+            text-transform: uppercase;
+        }
+        
+        html #intro .select {
+            margin-top: 20px;
+            position: relative;
+            z-index: 999999;
+        }
+        
+        html #intro .select span {
+            color: #fff;
+            font-weight: 400;
+            padding: 0 20px;
+            position: relative;
+            letter-spacing: 1px;
+        }
+        
+        html #intro a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 900;
+            font-size: 11px;
+            text-shadow: none;
+            margin-top: 20px;
+            display: block;
+            text-shadow: 0 1px 0 #000;
+            letter-spacing: 1px;
+            cursor: pointer;
+            position: relative;
+            z-index: 9999;
+        }
+        
+        html #intro h1 {
+            margin: 0;
+            padding: 0;
+            color: #eee;
+            font-weight: 100;
+            letter-spacing: 10px;
+            font-size: 120%;
+        }
+        
+        html #intro h1 b {
+            font-size: 260%;
+            letter-spacing: -0.4px;
+            font-weight: 700;
+            display: block;
+            overflow-y: hidden;
+            text-shadow: 10px 0 106px rgba(255, 255, 255, 0.96), -10px 0 106px rgba(255, 255, 255, 0.96), 0 0 20px #ffffff, 0 0 5px #ffffff;
+            overflow-x: visible;
+            height: 45px;
+            line-height: 42px;
+            margin-top: 10px;
+            box-shadow: 0 0 50px 20px rgba(0, 0, 0, 0.07);
+        }
+        
+        html #intro h2 {
+            margin: 10px 0 0 0;
+            padding: 0;
+            color: #999;
+            font-size: 80%;
+            font-weight: 300;
+        }
+    </style>
+
+    <script>
+        window.console = window.console || function(t) {};
+    </script>
+
+
+
+    <script>
+        if (document.location.search.match(/type=embed/gi)) {
+            window.parent.postMessage("resize", "*");
+        }
+    </script>
+
+
+</head>
+
+<body translate="no">
+    </div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <div class="box" style="visibility: inherit; opacity: .00005; top: 1px; left: 652px;"></div>
+    <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-1b93190375e9ccc259df3a57c1abc0e64599724ae30d7ea4c6877eb615f89387.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.15.0/TweenMax.min.js"></script>
+    <script id="rendered-js">
+        /* 
+         * I will keep publishing examples to help push the web foward.
+         * PLEASE Like, Heart or Share if you like, and don't forget to follow. 
+         * Thanks.
+         *
+         * Now let's animate it :)
+         */
+
+        var $box = $('.box'),
+            inter = 30,
+            speed = 0;
+
+        function moveBox(e) {
+            //TweenMax.killTweensOf();
+            $box.each(function(index, val) {
+                TweenLite.to($(this), 0.05, {
+                    css: {
+                        left: e.pageX,
+                        top: e.pageY,
+                        opacity: .25
+                    },
+                    delay: index / (20 * 100)
+                });
+            });
+        }
+
+        $(window).on('mousemove', moveBox);
+
+        $box.each(function(index, val) {
+            index = index + 1;
+            TweenMax.set(
+                $(this), {
+                    autoAlpha: 1,
+                    delay: 0
+                });
+
+        });
+        TweenMax.set(
+            $('.text:nth-child(30)'), {
+                autoAlpha: 1,
+                delay: 0
+            });
+
+
+
+        //V2.0
+        $('.pointer').mouseover(function() {
+            //console.log('cursor');
+            $box.addClass('arrow');
+        });
+        $('.circle').mouseover(function() {
+            //console.log('circle');
+            $box.removeClass('arrow');
+        });
+        //# sourceURL=pen.js
+    </script>
+
+
+
+
+
+    <style>
+        body {
+            background: black;
+        }
+    </style>
+
+</body>
+
+</html>
